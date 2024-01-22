@@ -8,6 +8,7 @@ function cat(path){
             process.kill(1)
         }
         console.log(data)
+        return data
       });
 }
 
@@ -18,7 +19,8 @@ async function webCat(path){
 }
 
 async function webCatWrite(path,file){
-    fs.writeFile(file,webCat(path),"utf8", function(err){
+    let temp = await webCat(path)
+    fs.writeFile(file, temp,{encoding:"utf8",flag:'a'}, function(err){
         if (err){
             console.log(err)
             process.exit(1)
